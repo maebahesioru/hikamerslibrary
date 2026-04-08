@@ -308,41 +308,8 @@ export function useAiSearch({ submittedQuery, shareId, executeRecaptcha, mediaFi
         return
       }
 
-      const token = await executeRecaptchaRef.current('ai_search_url')
-      if (token === 'skip') {
-        await loadTweetsAndQueryRef.current(submittedQuery)
-        isProcessingRef.current = false
-        return
-      }
-      
-      if (!token) {
-        isProcessingRef.current = false
-        alert('セキュリティ検証に失敗しました。')
-        router.push('/')
-        return
-      }
-
-      try {
-        const response = await fetch('/api/verify-recaptcha', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token })
-        })
-        const data = await response.json()
-        if (!data.success) {
-          isProcessingRef.current = false
-          alert('ボットの可能性があると判定されました。')
-          router.push('/')
-          return
-        }
-        verifiedList.push(submittedQuery)
-        sessionStorage.setItem('verified_ai_queries', JSON.stringify(verifiedList))
-        await loadTweetsAndQueryRef.current(submittedQuery)
-      } catch (error) {
-        alert('セキュリティ検証中にエラーが発生しました。')
-        router.push('/')
-      } finally {
-        isProcessingRef.current = false
+      await loadTweetsAndQueryRef.current(submittedQuery)
+      isProcessingRef.current = false
       }
     }
 

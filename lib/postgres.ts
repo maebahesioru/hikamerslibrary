@@ -1,25 +1,12 @@
-import { getCloudflareContext } from '@opennextjs/cloudflare'
-import { Pool, PoolClient } from 'pg'
+import { Pool } from 'pg'
 
-// PostgreSQL接続プール（サーバーレス環境対応）
+// PostgreSQL接続プール
 let pool: Pool | null = null
 
 function resolveConnectionString(): string {
-  try {
-    const { env } = getCloudflareContext()
-    const hyper = (env as { HYPERDRIVE?: { connectionString?: string } })
-      .HYPERDRIVE
-    if (hyper?.connectionString) {
-      return hyper.connectionString
-    }
-  } catch {
-    // Cloudflare 外（next dev / Node）では未設定
-  }
   const connectionString = process.env.DATABASE_URL
   if (!connectionString) {
-    throw new Error(
-      'DATABASE_URL must be set (Cloudflare では Hyperdrive の HYPERDRIVE バインディングでも可)'
-    )
+    throw new Error('DATABASE_URL must be set')
   }
   return connectionString
 }
