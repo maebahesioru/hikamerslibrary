@@ -1,0 +1,17 @@
+/* TEAM */
+Developer: 十字架_mania
+Twitter: @maebahesioru2
+Site: https://hikamerslibrary.vercel.app
+Location: Japan
+
+/* SITE */
+Name: HikamersSearch
+Launch: 2025-10-27
+Standards: HTML5, CSS3, JavaScript ES6+
+Components: Next.js 14, React 18, TypeScript
+Software: Visual Studio Code, Vercel
+Database: Turso (LibSQL)
+
+/* THANKS */
+ヒカマー界隈の皆さん
+ヒカキンさん

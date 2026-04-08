@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  title: HikamersSearch API
+  description: ヒカマー界隈のツイート検索API
+  version: 1.0.0
+  contact:
+    name: 十字架_mania
+    url: https://x.com/maebahesioru2
+servers:
+  - url: https://hikamerslibrary.vercel.app/api
+paths:
+  /tweets/stream:
+    get:
+      operationId: searchTweets
+      summary: ツイートを検索
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+          description: 検索クエリ
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+          description: 取得件数
+      responses:
+        '200':
+          description: 検索結果
+  /suggestions:
+    get:
+      operationId: getSuggestions
+      summary: 検索サジェストを取得
+      parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+          description: 入力テキスト
+      responses:
+        '200':
+          description: サジェスト一覧

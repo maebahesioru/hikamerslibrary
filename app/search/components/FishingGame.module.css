@@ -1,0 +1,126 @@
+.fishingContainer {
+  position: relative;
+  padding: 40px;
+  text-align: center;
+}
+
+.monster {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.monsterFace {
+  font-size: 80px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  animation: whistle 3s ease-in-out infinite;
+}
+
+@keyframes whistle {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.fishingRod {
+  position: absolute;
+  top: 50%;
+  right: -40px;
+  font-size: 40px;
+  transform-origin: left center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.casting {
+  animation: cast 2s ease-in-out;
+}
+
+@keyframes cast {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+}
+
+.water {
+  font-size: 40px;
+  margin: 20px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.caught {
+  margin: 20px 0;
+  animation: catchAnimation 0.5s ease-out;
+}
+
+.caughtItem {
+  font-size: 60px;
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@keyframes catchAnimation {
+  0% {
+    transform: translateY(50px) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.controls {
+  margin-top: 30px;
+}
+
+.score {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+}
+
+.fishButton {
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  font-weight: bold;
+}
+
+.fishButton:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.fishButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.hint {
+  margin-top: 15px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}

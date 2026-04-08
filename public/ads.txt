@@ -1,0 +1,3 @@
+# HikamersSearch does not display ads
+# This file exists to prevent unauthorized ad networks
+# Contact: https://x.com/maebahesioru2

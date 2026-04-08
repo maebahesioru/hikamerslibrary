@@ -1,0 +1,11 @@
+.masonryContainer {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.masonryColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

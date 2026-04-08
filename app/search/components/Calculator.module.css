@@ -1,0 +1,86 @@
+.calculator {
+  max-width: 800px;
+  margin: 20px 0;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.display {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  text-align: right;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.equation {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  min-height: 20px;
+}
+
+.result {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.btnNumber,
+.btnOperator,
+.btnFunction {
+  padding: 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.btnNumber {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.btnNumber:hover {
+  background: var(--hover-bg);
+}
+
+.btnOperator {
+  background: #4285f4;
+  color: white;
+}
+
+.btnOperator:hover {
+  background: #3367d6;
+}
+
+.btnFunction {
+  background: #ea4335;
+  color: white;
+}
+
+.btnFunction:hover {
+  background: #d33426;
+}
+
+.btnEquals {
+  grid-row: span 2;
+}
+
+.btnZero {
+  grid-column: span 2;
+}

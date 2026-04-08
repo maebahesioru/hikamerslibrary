@@ -1,0 +1,412 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.header {
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.main {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  gap: 24px;
+}
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.message {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+/* ログインボックス */
+.loginBox {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  margin: 60px auto;
+}
+
+.loginBox h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.switchText {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.linkBtn {
+  background: none;
+  border: none;
+  color: var(--link-color);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+}
+
+.linkBtn:hover {
+  text-decoration: underline;
+}
+
+.addressBox {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.addressBox code {
+  flex: 1;
+  font-size: 12px;
+  word-break: break-all;
+  color: var(--text-primary);
+}
+
+.copyBtn {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.copyBtn:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--link-color);
+}
+
+.input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* ボタン */
+.btn {
+  padding: 10px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.1s, box-shadow 0.1s;
+}
+
+.btn:hover {
+  border-color: var(--text-secondary);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnPrimary {
+  background-color: var(--link-color);
+  border-color: var(--link-color);
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  opacity: 0.9;
+}
+
+/* ウォレットカード */
+.walletCard {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.addressLabel {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+
+.address {
+  font-size: 14px;
+  font-family: monospace;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.userName {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.balance {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.balance span {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.stats {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.walletActions {
+  display: flex;
+  gap: 12px;
+}
+
+/* タブ */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 20px;
+}
+
+.tabBtn {
+  padding: 12px 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.1s;
+}
+
+.tabBtn:hover {
+  color: var(--text-primary);
+}
+
+.tabBtn.active {
+  color: var(--link-color);
+  border-bottom-color: var(--link-color);
+}
+
+/* 送金ボックス */
+.transferBox {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.transferBox .btn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* 履歴リスト */
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.historyItem {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 8px 12px;
+  align-items: center;
+}
+
+.txType {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.txAmount {
+  font-weight: 600;
+  font-size: 16px;
+  text-align: right;
+}
+
+.txDesc {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.txDate {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+/* ランキングリスト */
+.rankingList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rankingItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.rank {
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 32px;
+  font-size: 14px;
+}
+
+.rankName {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.rankBalance {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.rankingItem:nth-child(1) .rank { color: #d4af37; }
+.rankingItem:nth-child(2) .rank { color: #a8a8a8; }
+.rankingItem:nth-child(3) .rank { color: #cd7f32; }
+
+.secondary {
+  background-color: transparent;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+
+  .main {
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .loginBox {
+    margin: 30px auto;
+    padding: 20px;
+  }
+
+  .balance {
+    font-size: 28px;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .walletActions {
+    flex-direction: column;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+}

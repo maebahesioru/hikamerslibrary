@@ -1,0 +1,5 @@
+{
+  "issuer": "https://hikamerslibrary.vercel.app",
+  "authorization_endpoint": "https://hikamerslibrary.vercel.app/about",
+  "jwks_uri": "https://hikamerslibrary.vercel.app/.well-known/jwks.json"
+}

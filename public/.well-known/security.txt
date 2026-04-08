@@ -1,0 +1,10 @@
+# HikamersSearch Security Policy
+# セキュリティに関するお問い合わせ
+
+Contact: https://x.com/maebahesioru2
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: ja, en
+
+# セキュリティ上の問題を発見された場合は、
+# 上記のTwitterアカウントまでDMでご連絡ください。
+# 責任ある開示にご協力いただきありがとうございます。

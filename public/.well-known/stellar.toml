@@ -1,0 +1,6 @@
+# HikamersSearch Stellar TOML
+# This is a placeholder for Stellar protocol integration
+
+[DOCUMENTATION]
+ORG_NAME="HikamersSearch"
+ORG_URL="https://hikamerslibrary.vercel.app"

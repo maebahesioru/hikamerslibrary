@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "HikamersSearch",
+  "name_for_model": "hikamers_search",
+  "description_for_human": "ヒカマー界隈のツイートを検索できるプラグイン",
+  "description_for_model": "Search tweets from Hikamer community. Use this to find tweets about Hikakin fans and related topics.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://hikamerslibrary.vercel.app/openapi.yaml"
+  },
+  "logo_url": "https://hikamerslibrary.vercel.app/icon-512.png",
+  "contact_email": "contact@example.com",
+  "legal_info_url": "https://hikamerslibrary.vercel.app/about"
+}

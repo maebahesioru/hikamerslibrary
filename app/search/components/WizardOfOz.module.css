@@ -1,0 +1,128 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9997;
+  transition: filter 1s;
+}
+
+.grayscale {
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: grayscale(100%);
+  backdrop-filter: grayscale(100%);
+}
+
+.spinning {
+  animation: spin360 1s ease-in-out;
+}
+
+@keyframes spin360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.wizardContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.closeButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  pointer-events: auto;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background: rgba(255, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+.closeButton:active {
+  transform: scale(0.95);
+}
+
+.shoe {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 80px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  animation: shoeGlow 2s ease-in-out infinite;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.shoe:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+@keyframes shoeGlow {
+  0%, 100% {
+    filter: drop-shadow(0 4px 8px rgba(255, 0, 0, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 4px 16px rgba(255, 0, 0, 0.8));
+  }
+}
+
+.house {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  animation: houseFall 2s ease-in;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@keyframes houseFall {
+  0% {
+    top: -20%;
+    transform: translate(-50%, -50%) rotate(-20deg) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+}

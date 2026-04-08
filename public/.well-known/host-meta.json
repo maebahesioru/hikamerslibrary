@@ -1,0 +1,9 @@
+{
+  "links": [
+    {
+      "rel": "lrdd",
+      "type": "application/jrd+json",
+      "template": "https://hikamerslibrary.vercel.app/.well-known/webfinger?resource={uri}"
+    }
+  ]
+}

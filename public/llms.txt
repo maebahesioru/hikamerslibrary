@@ -1,0 +1,16 @@
+# HikamersSearch - LLM Information
+
+## About
+HikamersSearch is a tweet search engine for the Hikamer community (Hikakin fans).
+
+## Allowed
+- Crawling public pages
+- Using search API for research
+- Indexing content
+
+## API
+- Search: /api/tweets/stream?q={query}
+- Suggestions: /api/suggestions?q={query}
+
+## Contact
+https://x.com/maebahesioru2

@@ -1,0 +1,10 @@
+# VoID (Vocabulary of Interlinked Datasets)
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://hikamerslibrary.vercel.app/dataset>
+  a void:Dataset ;
+  dcterms:title "HikamersSearch Tweet Dataset" ;
+  dcterms:description "Collection of tweets from Hikamer community" ;
+  void:feature <http://www.w3.org/ns/formats/TSV> ;
+  void:sparqlEndpoint <https://hikamerslibrary.vercel.app/api/tweets/stream> .

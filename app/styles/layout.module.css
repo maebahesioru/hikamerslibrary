@@ -1,0 +1,113 @@
+/* レイアウト・コンテナ */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+}
+
+/* ヘッダー */
+.header {
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerWithSearch {
+  padding: 12px 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background-color: var(--bg-primary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ロゴ */
+.logo {
+  font-size: 22px;
+  color: var(--text-primary);
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logoLarge {
+  font-size: 92px;
+  color: var(--text-primary);
+  font-weight: 400;
+  letter-spacing: -5px;
+  margin-bottom: 30px;
+  text-align: center;
+  max-width: 600px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* タブ */
+.tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+}
+
+.tab {
+  padding: 12px 16px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tabActive {
+  color: var(--link-color);
+  border-bottom-color: var(--link-color);
+}
+
+/* ローディング */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+
+  .headerWithSearch {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px 15px 0;
+  }
+
+  .logo {
+    height: 32px;
+  }
+
+  .logoLarge {
+    font-size: 48px;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    max-width: 90%;
+  }
+
+  .tabs {
+    padding: 0 15px;
+    overflow-x: auto;
+  }
+}

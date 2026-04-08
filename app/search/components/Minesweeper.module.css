@@ -1,0 +1,186 @@
+.container {
+  max-width: 800px;
+  margin: 20px 0;
+  padding: 0;
+  background: #558b2f;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.topBar {
+  background: #33691e;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.difficultySelector {
+  display: flex;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.difficultyBtn {
+  padding: 8px 20px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.difficultyBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.difficultyBtn.active {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  font-weight: bold;
+}
+
+.header {
+  background: #689f38;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 15px;
+  border-radius: 8px;
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  font-family: 'Courier New', monospace;
+  min-width: 40px;
+  text-align: center;
+}
+
+.resetBtn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 28px;
+  transition: all 0.2s;
+}
+
+.resetBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  background: #7cb342;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 35px;
+  height: 35px;
+  border: none;
+  background: #9ccc65;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s;
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.2), inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+  margin: 1px;
+}
+
+.cell:hover:not(.revealed) {
+  background: #aed581;
+  transform: scale(0.95);
+}
+
+.cell.revealed {
+  background: #d7ccc8;
+  cursor: default;
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.cell.flagged {
+  background: #ffb74d;
+}
+
+.cell.num1 {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.cell.num2 {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.cell.num3 {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.cell.num4 {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.cell.num5 {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.cell.num6 {
+  background: #e0f7fa;
+  color: #00838f;
+}
+
+.cell.num7 {
+  background: #fce4ec;
+  color: #ad1457;
+}
+
+.cell.num8 {
+  background: #f1f8e9;
+  color: #558b2f;
+}
+
+.cell.num0 {
+  background: #d7ccc8;
+}

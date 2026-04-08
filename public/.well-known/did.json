@@ -1,0 +1,12 @@
+{
+  "@context": ["https://www.w3.org/ns/did/v1"],
+  "id": "did:web:hikamerslibrary.vercel.app",
+  "verificationMethod": [],
+  "service": [
+    {
+      "id": "#website",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://hikamerslibrary.vercel.app"
+    }
+  ]
+}

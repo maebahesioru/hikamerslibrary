@@ -1,0 +1,10 @@
+{
+  "tracking": "N",
+  "compliance": ["https://www.w3.org/TR/tracking-compliance/"],
+  "qualifiers": "NONE",
+  "controller": ["HikamersSearch"],
+  "same-party": [],
+  "audit": [],
+  "policy": "https://hikamerslibrary.vercel.app/about",
+  "config": "https://hikamerslibrary.vercel.app/.well-known/dnt-policy.txt"
+}

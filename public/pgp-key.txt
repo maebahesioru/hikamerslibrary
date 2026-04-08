@@ -1,0 +1,7 @@
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Comment: Contact: https://x.com/maebahesioru2
+Comment: This is a placeholder. Replace with actual PGP key if needed.
+
+No PGP key configured yet.
+Contact the developer via X (Twitter): @maebahesioru2
+-----END PGP PUBLIC KEY BLOCK-----

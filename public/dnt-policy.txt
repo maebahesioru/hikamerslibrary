@@ -1,0 +1,18 @@
+HikamersSearch Do Not Track Policy
+===================================
+
+This site respects Do Not Track (DNT) signals.
+
+Tracking: NO
+We do not track users across websites.
+We do not collect personal information for advertising.
+We do not share data with third parties for tracking purposes.
+
+Data Collection:
+- Search queries (for functionality only)
+- Anonymous usage statistics (optional)
+
+Contact: https://x.com/maebahesioru2
+Policy URL: https://hikamerslibrary.vercel.app/about
+
+Last Updated: 2025-01-07

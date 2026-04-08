@@ -1,0 +1,149 @@
+.pacmanContainer {
+  max-width: 650px;
+  margin: 20px 0;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.scoreBoard {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  text-align: right;
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--text-primary);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.grid {
+  position: relative;
+  background: #000;
+  border: 3px solid #0000ff;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ffb897;
+  border-radius: 50%;
+}
+
+.pacman {
+  position: absolute;
+  background: #ffff00;
+  border-radius: 50%;
+  transition: all 0.1s linear;
+}
+
+.wall {
+  position: absolute;
+  background: #0000ff;
+  border: 1px solid #4444ff;
+}
+
+.startScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.startTitle {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ffff00;
+  text-shadow: 3px 3px 0 #0000ff;
+  letter-spacing: 4px;
+}
+
+.startButton {
+  padding: 16px 48px;
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #4285f4;
+  color: white;
+}
+
+.startButton:hover {
+  background: #3367d6;
+  transform: scale(1.05);
+}
+
+.startButton:active {
+  transform: scale(0.95);
+}
+
+.ghost {
+  position: absolute;
+  border-radius: 50% 50% 0 0;
+  transition: all 0.1s linear;
+}
+
+.gameOverScreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 10;
+}
+
+.gameOverTitle {
+  font-size: 42px;
+  font-weight: bold;
+  color: #ff0000;
+  text-shadow: 3px 3px 0 #000;
+  letter-spacing: 4px;
+}
+
+.finalScore {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffff00;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.mouthOpen {
+  clip-path: polygon(100% 50%, 0% 0%, 0% 100%);
+}
+
+.mouthClosed {
+  clip-path: polygon(100% 50%, 0% 20%, 0% 80%);
+}
+
+.instructions {
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 14px;
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+}

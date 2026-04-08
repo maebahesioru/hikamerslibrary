@@ -1,0 +1,143 @@
+.eclipseContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  overflow: visible;
+}
+
+.instructions {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 16px;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  animation: fadeInOut 4s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}
+
+.closeButton {
+  position: fixed;
+  top: 160px;
+  left: 50%;
+  transform: translateX(170px);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  pointer-events: auto;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background: rgba(255, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateX(170px) scale(1.1);
+}
+
+.closeButton:active {
+  transform: translateX(170px) scale(0.95);
+}
+
+.sky {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 26, 51, 0.3) 0%, rgba(0, 51, 102, 0.2) 50%, transparent 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.sun {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff9e6 0%, #ffeb3b 50%, #ffa726 100%);
+  box-shadow: 0 0 40px 15px rgba(255, 235, 59, 0.6);
+  z-index: 1;
+}
+
+.corona {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 
+    0 0 20px 10px rgba(255, 255, 255, 0.3),
+    0 0 40px 20px rgba(255, 235, 59, 0.2),
+    0 0 60px 30px rgba(255, 167, 38, 0.1);
+  animation: coronaPulse 2s ease-in-out infinite;
+}
+
+@keyframes coronaPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.moon {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #4a4a4a 0%, #2a2a2a 50%, #1a1a1a 100%);
+  box-shadow: inset -8px -8px 15px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  transition: left 2s ease-in-out;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.stars {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+  transition: opacity 1s;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.3); }
+}

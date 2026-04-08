@@ -1,0 +1,15 @@
+{
+  "subject": "acct:hikamers@hikamerslibrary.vercel.app",
+  "links": [
+    {
+      "rel": "self",
+      "type": "application/activity+json",
+      "href": "https://hikamerslibrary.vercel.app"
+    },
+    {
+      "rel": "http://webfinger.net/rel/profile-page",
+      "type": "text/html",
+      "href": "https://hikamerslibrary.vercel.app/about"
+    }
+  ]
+}

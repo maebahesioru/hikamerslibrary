@@ -1,0 +1,132 @@
+.popcornContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.scoreBoard {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 140, 0, 0.9);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 24px;
+  font-size: 24px;
+  font-weight: bold;
+  z-index: 9999;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.closeButton {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(150px);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  pointer-events: auto;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background: rgba(255, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateX(150px) scale(1.1);
+}
+
+.closeButton:active {
+  transform: translateX(150px) scale(0.95);
+}
+
+.instructions {
+  position: fixed;
+  top: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 16px;
+  font-size: 16px;
+  z-index: 9999;
+  pointer-events: none;
+  animation: fadeInOut 4s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+}
+
+.popcorn {
+  position: fixed;
+  font-size: 40px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: bottom 3s linear, transform 0.3s;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.popcorn:hover {
+  transform: scale(1.2);
+}
+
+.popcorn:active {
+  transform: scale(1.1);
+}
+
+.popped {
+  animation: pop 0.3s ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.3) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+.falling {
+  animation: fall 3s linear;
+}
+
+@keyframes fall {
+  0% {
+    bottom: 80%;
+    opacity: 1;
+  }
+  100% {
+    bottom: -10%;
+    opacity: 0.5;
+  }
+}

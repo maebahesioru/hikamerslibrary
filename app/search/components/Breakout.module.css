@@ -1,0 +1,57 @@
+.container {
+  max-width: 520px;
+  margin: 20px 0;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.score {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.resetBtn {
+  padding: 10px 20px;
+  background: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.resetBtn:hover {
+  background: #3367d6;
+}
+
+.message {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 15px;
+}
+
+.canvas {
+  display: block;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  cursor: none;
+}

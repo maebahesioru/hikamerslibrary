@@ -1,0 +1,60 @@
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeletonText {
+  width: 150px;
+  height: 20px;
+  background-color: var(--border-color);
+  border-radius: 4px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonContainer {
+  display: flex;
+  gap: 16px;
+}
+
+.skeletonContent {
+  flex: 1;
+}
+
+.skeletonTitle {
+  width: 200px;
+  height: 16px;
+  background-color: var(--border-color);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonSubtitle {
+  width: 300px;
+  height: 24px;
+  background-color: var(--border-color);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonBody {
+  width: 100%;
+  height: 60px;
+  background-color: var(--border-color);
+  border-radius: 4px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeletonImage {
+  width: 120px;
+  height: 120px;
+  background-color: var(--border-color);
+  border-radius: 8px;
+  flex-shrink: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
