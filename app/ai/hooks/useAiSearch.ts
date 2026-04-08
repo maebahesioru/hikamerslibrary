@@ -310,7 +310,6 @@ export function useAiSearch({ submittedQuery, shareId, executeRecaptcha, mediaFi
 
       await loadTweetsAndQueryRef.current(submittedQuery)
       isProcessingRef.current = false
-      }
     }
 
     checkAndRun()
