@@ -43,3 +43,9 @@ cloudflare-env.d.ts
 
 # TSV data files
 public/20*/
+
+# Scraper
+Yahoo-Realtime-Search-Scraper/
+
+# Kiro
+.kiro/
