@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next'
+﻿import type { Metadata, Viewport } from 'next'
 import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import Footer from './components/Footer'
@@ -490,6 +490,7 @@ export default function RootLayout({
         </a>
         {children}
         <Footer />
+              <script src="https://hikakinmaniacoin.hikamer.f5.si/ad.js" async></script>
       </body>
     </html>
   )
