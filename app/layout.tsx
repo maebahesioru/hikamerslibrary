@@ -16,6 +16,7 @@ const notoSansJP = Noto_Sans_JP({
   variable: '--font-noto-sans-jp',
 })
 
+// rebuild trigger
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
