@@ -1,5 +1,5 @@
 /** 公開サイトのオリジン（末尾スラッシュなし）。Cloudflare では NEXT_PUBLIC_SITE_URL を設定。 */
-const DEFAULT_SITE = 'https://hikamerslibrary.vercel.app'
+const DEFAULT_SITE = 'https://hikamerslibrary.hikamer.f5.si'
 
 /** env がホストのみ・スキームなしでも有効な https URL に正規化する */
 export function getSiteUrl(): string {
