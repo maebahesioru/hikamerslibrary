@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next'
+﻿import type { Metadata, Viewport } from 'next'
 import { Noto_Sans_JP } from 'next/font/google'
 import './globals.css'
 import Footer from './components/Footer'
@@ -16,6 +16,7 @@ const notoSansJP = Noto_Sans_JP({
   variable: '--font-noto-sans-jp',
 })
 
+// rebuild trigger
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -56,14 +57,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon', sizes: '32x32', type: 'image/png' },
       { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icon-512.png', sizes: '512x512', type: 'image/png' }
     ],
     apple: [
       { url: '/icon-192.png', sizes: '192x192' },
     ],
-    shortcut: '/favicon.ico',
+    shortcut: '/icon',
   },
   openGraph: {
     type: 'website',

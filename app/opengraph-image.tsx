@@ -1,6 +1,5 @@
 import { ImageResponse } from 'next/og'
 
-export const dynamic = 'force-dynamic'
 export const alt = 'HikamersSearch - ツイート検索エンジン'
 export const size = {
   width: 1200,
