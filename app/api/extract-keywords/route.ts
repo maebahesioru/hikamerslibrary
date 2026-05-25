@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPool } from '@/lib/postgres'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+
 const MAX_TWEETS = 25000
 
 // ストップワード

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPool } from '@/lib/postgres'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+
 // ヘッダー（tech.mdのスキーマに準拠）
 const HEADERS = [
   'id', 'createdAt', 'displayText', 'lang', 'source',

@@ -4,6 +4,10 @@ import { parseJsonQuestion, isValidQuestion } from './parseQuestion'
 import { callGeminiAPIStream } from './gemini'
 import { buildQuizPrompt } from './prompt'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+
 // Vercel Serverless Function timeout (Pro plan: max 300s, Hobby: max 60s)
 export const maxDuration = 300
 

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPool } from '@/lib/postgres'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+
 // マテリアライズドビューをリフレッシュ
 export async function POST(request: NextRequest) {
   // 簡易認証（本番では適切な認証を）
