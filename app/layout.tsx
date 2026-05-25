@@ -5,6 +5,8 @@ import Footer from './components/Footer'
 import { WebVitals } from './components/WebVitals'
 import { getSiteUrl } from '@/lib/site-url'
 
+export const dynamic = 'force-dynamic'
+
 const siteUrl = getSiteUrl()
 
 // フォント最適化
