@@ -20,6 +20,13 @@ import orjson
 # メンバー一覧（DBより優先して検索対象ハンドルに使う）
 DEFAULT_MEMBERS_CSV = 'members_2026-03-21T12-35-40.csv'
 
+# Wikiからメンバー一覧を取得（ヒカマー一覧ページ）
+WIKI_API_URL = 'https://hikamers.net/api.php'
+WIKI_PAGE = 'ヒカマー一覧'
+
+# プリコンパイル済み正規表現（Wikiテンプレート抽出）
+RE_HIKAMER_TEMPLATE = regex.compile(r'\{\{ヒカマー\|([^}]+)\}')
+
 # User-Agent設定
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 
@@ -840,6 +847,117 @@ def load_handles_from_db():
         sys.exit(1)
 
 
+def parse_hikamer_template(params_str):
+    """{{ヒカマー|...}} のパラメータ文字列から (handle, name, user_id) を抽出"""
+    params = {}
+    positional = []
+
+    # | で分割（ただし {{...}} のネストは展開済み）
+    depth = 0
+    current = ''
+    for ch in params_str:
+        if ch == '{':
+            depth += 1
+        elif ch == '}':
+            depth -= 1
+        if ch == '|' and depth == 0:
+            # 数字=値 形式か判定
+            eq_pos = current.find('=')
+            if eq_pos > 0 and current[:eq_pos].strip().isdigit():
+                positional.append(current)
+            elif eq_pos > 0:
+                k, v = current.split('=', 1)
+                params[k.strip()] = v.strip()
+            else:
+                positional.append(current)
+            current = ''
+        else:
+            current += ch
+
+    # 最後のパート
+    if current:
+        eq_pos = current.find('=')
+        if eq_pos > 0 and current[:eq_pos].strip().isdigit():
+            positional.append(current)
+        elif eq_pos > 0:
+            k, v = current.split('=', 1)
+            params[k.strip()] = v.strip()
+        else:
+            positional.append(current)
+
+    # 位置パラメータを番号付け
+    for i, p in enumerate(positional):
+        if '=' in p:
+            k, v = p.split('=', 1)
+            params[k.strip()] = v.strip()
+        else:
+            params[str(i + 1)] = p.strip()
+
+    handle = params.get('2', '')
+    name = params.get('1', '')
+    user_id = params.get('id', '')
+
+    # |2= がない場合、|1= がハンドルを兼ねる
+    if not handle:
+        handle = name
+        name = ''
+
+    return handle, name, user_id
+
+
+async def load_handles_from_wiki():
+    """ヒカマーWikiの「ヒカマー一覧」ページからハンドル一覧を取得"""
+    import urllib.request
+    import urllib.parse
+    import json
+
+    query = urllib.parse.urlencode({
+        'action': 'parse',
+        'page': WIKI_PAGE,
+        'prop': 'wikitext',
+        'format': 'json',
+    })
+    url = f'{WIKI_API_URL}?{query}'
+
+    print(f"\nWikiからメンバー一覧を取得中...")
+    print(f"  URL: {url}")
+
+    try:
+        req = urllib.request.Request(url)
+        req.add_header('User-Agent', USER_AGENT)
+        with urllib.request.urlopen(req, timeout=30) as f:
+            data = json.loads(f.read())
+
+        wikitext = data['parse']['wikitext']['*']
+
+        # {{ヒカマー|...}} を抽出
+        matches = RE_HIKAMER_TEMPLATE.findall(wikitext)
+        print(f"  Wikiテンプレート数: {len(matches)}")
+
+        handles = []
+        seen = set()
+        for m in matches:
+            handle, name, user_id = parse_hikamer_template(m)
+            if handle and handle not in seen:
+                seen.add(handle)
+                handles.append(handle)
+
+        if not handles:
+            print("  [WARN] Wikiから抽出できたハンドルが0件")
+            return None
+
+        print(f"  [OK] Wikiから{len(handles)}件のハンドルを取得")
+        return handles
+
+    except Exception as e:
+        import urllib.error as _urle
+        if isinstance(e, (_urle.HTTPError, _urle.URLError)):
+            print(f"  [WARN] Wiki HTTP/ネットワークエラー: {e}")
+        else:
+            print(f"  [WARN] Wiki 取得エラー: {e}")
+        return None
+
+
 def get_existing_ids(filepath):
     """既存TSVファイルからIDを取得"""
     ids = set()
@@ -1183,7 +1301,12 @@ async def async_main(args):
     members_path = os.path.join(script_dir, DEFAULT_MEMBERS_CSV)
     handles = None
 
-    if os.path.isfile(members_path):
+    # 1. Wiki から取得（優先）→ --use-csv でスキップ可能
+    if not args.use_csv:
+        handles = await load_handles_from_wiki()
+
+    # 2. Wiki失敗時 or --use-csv 指定時 → CSV から取得
+    if handles is None and os.path.isfile(members_path):
         try:
             if not args.skip_members_userid_fill:
                 n_fill = await fill_missing_members_user_ids(
@@ -1211,10 +1334,11 @@ async def async_main(args):
                         member_rows,
                         concurrency=args.resolve_concurrency,
                     )
-                    print(f"[OK] {DEFAULT_MEMBERS_CSV} から {len(handles)} 件（DB より優先）")
+                    print(f"[OK] {DEFAULT_MEMBERS_CSV} から {len(handles)} 件")
         except Exception as e:
             print(f"[WARN] {DEFAULT_MEMBERS_CSV} 処理エラー: {e}。DB へフォールバック", file=sys.stderr)
 
+    # 3. 最終フォールバック: DB
     if handles is None:
         handles = load_handles_from_db()
 
@@ -1294,6 +1418,8 @@ def main():
                         help='members CSV の UserID 解決をせず Username のみ使う（オフライン想定）')
     parser.add_argument('--skip-members-userid-fill', action='store_true',
                         help='起動時の members CSV の UserID・Icon 自動補完（ProfileURL / FxTwitter）をしない')
+    parser.add_argument('--use-csv', action='store_true',
+                        help='Wikiを使わずCSVメンバー一覧を直接使う（オフライン想定）')
     parser.add_argument('--resolve-concurrency', type=int, default=30,
                         help='UserID 補完・ハンドル解決の同時 HTTP 数（デフォルト: 30）')
     
