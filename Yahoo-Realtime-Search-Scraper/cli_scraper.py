@@ -17,6 +17,17 @@ import regex
 import httpx
 import orjson
 
+# .env.local を最初に読み込む（YAHOO_PROXY などの環境変数を使うため）
+from dotenv import load_dotenv
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+_project_root = os.path.dirname(_script_dir)
+_env_local = os.path.join(_project_root, '.env.local')
+if os.path.exists(_env_local):
+    load_dotenv(_env_local)
+_env_file = os.path.join(_project_root, '.env')
+if os.path.exists(_env_file):
+    load_dotenv(_env_file)
+
 # メンバー一覧（DBより優先して検索対象ハンドルに使う）
 DEFAULT_MEMBERS_CSV = 'members_2026-03-21T12-35-40.csv'
 
@@ -33,7 +44,9 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 # Yahoo リアルタイム検索 JSON API（yahoo-realtime-api.md）。HTML / __NEXT_DATA__ は使わない。
 REALTIME_API_URL = 'https://search.yahoo.co.jp/realtime/api/v1/pagination'
 YAHOO_PROXY_BASE = os.environ.get('YAHOO_PROXY', '').rstrip('/')
-REALTIME_PROXY_URL = f'{YAHOO_PROXY_BASE}/pagination' if YAHOO_PROXY_BASE else None
+# http://... → httpx proxyとして使う。https://... → 中継URLとして使う（Worker等）
+YAHOO_HTTP_PROXY = YAHOO_PROXY_BASE if YAHOO_PROXY_BASE.startswith('http://') else None
+REALTIME_PROXY_URL = f'{YAHOO_PROXY_BASE}/pagination' if YAHOO_PROXY_BASE and not YAHOO_HTTP_PROXY else None
 REALTIME_RESULTS_PER_PAGE = 40  # API 上の最大
 
 # プリコンパイル済み正規表現（高速化）
@@ -275,35 +288,44 @@ class AsyncYahooScraper:
         self.semaphore = None
     
     async def fetch_realtime_api_json(self, client, params):
-        """GET REALTIME_API_URL → JSON dict（失敗時 None）。生IP→PROXYフォールバック"""
-        urls = [REALTIME_API_URL]
+        """GET REALTIME_API_URL → JSON dict（失敗時 None）。PROXY優先→生IPフォールバック"""
+        # YAHOO_PROXY が設定されていればWorkerを優先
+        urls = []
         if REALTIME_PROXY_URL:
             urls.append(REALTIME_PROXY_URL)
+        urls.append(REALTIME_API_URL)  # 生IPはフォールバック
         for url in urls:
             try:
                 async with self.semaphore:
                     response = await client.get(url, params=params)
                     if response.status_code == 200:
-                        return parse_json(response.text)
+                        data = parse_json(response.text)
+                        # 中身が空の場合は次のURLにフォールバック
+                        timeline = data.get('timeline') or {}
+                        if timeline.get('entry'):
+                            return data
             except Exception:
                 continue
         return None
 
     async def search_user(self, session, handle, start_date, end_date):
-        """単一ユーザーの全ツイートを非同期検索（JSON API /pagination）"""
+        """単一ユーザーの全ツイートを非同期検索（JSON API /pagination、startオフセット方式）"""
         keyword = f"@{handle}" if not handle.startswith('@') else handle
         keyword = f'ID:{keyword.replace("@", "")}'
 
-        # since/until は ID: にも有効（実測: JST の日付窓にツイートがあれば返る）。
-        # 窓内に 0 件のときは単にその期間にヒットがないだけ。日付は取得後にもフィルタして整合させる。
         params = {
             'p': keyword,
             'results': REALTIME_RESULTS_PER_PAGE,
         }
         all_results = []
         page_count = 0
+        start = 0
 
         while page_count < 500:
+            if start > 0:
+                params['start'] = str(start)
+            elif 'start' in params:
+                del params['start']
             data = await self.fetch_realtime_api_json(session, params)
             if not data:
                 break
@@ -325,6 +347,7 @@ class AsyncYahooScraper:
 
                 all_results.extend(page_results)
                 page_count += 1
+                start += REALTIME_RESULTS_PER_PAGE
 
                 # 日付チェック（ページ送り打ち切り）
                 if page_results and start_date:
@@ -343,15 +366,6 @@ class AsyncYahooScraper:
                         break
                     if oldest_tweet_date and oldest_tweet_date < (start_date.date() - timedelta(days=1)):
                         break
-
-                last_id = entries[-1].get('id')
-                if not last_id:
-                    break
-                params = {
-                    'p': keyword,
-                    'results': REALTIME_RESULTS_PER_PAGE,
-                    'oldestTweetId': str(last_id),
-                }
 
             except Exception:
                 break
@@ -397,15 +411,19 @@ class AsyncYahooScraper:
         
         limits = httpx.Limits(
             max_connections=self.max_concurrent,
-            max_keepalive_connections=100
+            max_keepalive_connections=self.max_concurrent,
         )
-        async with httpx.AsyncClient(
-            http2=True,
+        client_kwargs = dict(
+            http2=False,
             limits=limits,
             headers=headers,
             timeout=httpx.Timeout(self.timeout),
             follow_redirects=True
-        ) as client:
+        )
+        if YAHOO_HTTP_PROXY:
+            client_kwargs['proxy'] = YAHOO_HTTP_PROXY
+            print(f"[OK] HTTPプロキシ使用: {YAHOO_HTTP_PROXY}")
+        async with httpx.AsyncClient(**client_kwargs) as client:
             tasks = [self.search_user(client, h, start_date, end_date) for h in handles]
             await self._process_tasks(tasks, handles)
         
@@ -1386,7 +1404,7 @@ async def async_main(args):
                 output_file = os.path.join(year_dir, f"{date_str}.tsv")
                 return export_tsv(tweets, output_file)
             
-            with ThreadPoolExecutor(max_workers=len(grouped)) as executor:
+            with ThreadPoolExecutor(max_workers=max(1, len(grouped))) as executor:
                 futures = {executor.submit(write_tsv_for_date, d, t): d for d, t in grouped.items()}
                 for future in futures:
                     if not future.result():
