@@ -6,8 +6,8 @@
 const SCRAPER_SECRET = process.env.SCRAPER_SECRET || 'hikamers-scraper-2026'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
-// 実行時刻: 毎日 朝6:00 JST = 前日21:00 UTC
-const RUN_HOUR_UTC = 21
+// 実行時刻: 毎日 深夜0:00 JST = 前日15:00 UTC
+const RUN_HOUR_UTC = 15
 const RUN_MINUTE = 0
 
 function getNextRunTime(): Date {
