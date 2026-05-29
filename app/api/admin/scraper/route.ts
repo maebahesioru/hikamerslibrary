@@ -1,18 +1,15 @@
-
 import { NextRequest, NextResponse } from 'next/server'
 import { spawn } from 'child_process'
 import path from 'path'
 
 export const dynamic = 'force-dynamic'
-export const maxDuration = 600 // 10 minutes for full scrape
+export const maxDuration = 600
 
-// Simple secret check via Authorization header or SCRAPER_SECRET env
 const SCRAPER_SECRET = process.env.SCRAPER_SECRET || 'hikamers-scraper-2026'
 
 function checkAuth(request: NextRequest): boolean {
   const auth = request.headers.get('authorization')
   if (auth === `Bearer ${SCRAPER_SECRET}`) return true
-  // Also allow ?secret= param for cron job simplicity
   const url = new URL(request.url)
   if (url.searchParams.get('secret') === SCRAPER_SECRET) return true
   return false
@@ -26,18 +23,20 @@ export async function POST(request: NextRequest) {
   const url = new URL(request.url)
   const date = url.searchParams.get('date') || ''
   const dryRun = url.searchParams.has('dry-run')
-  
-  // Validate date if provided
+
   if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return NextResponse.json({ error: 'Invalid date format (YYYY-MM-DD)' }, { status: 400 })
   }
 
-  // Path to the Python scraper script
   const scraperDir = path.join(process.cwd(), 'Yahoo-Realtime-Search-Scraper')
-  const scraperScript = path.join(scraperDir, 'cli_scraper.py')
+  // プロキシローテーション付きラッパーを使用
+  const wrapperScript = path.join(scraperDir, 'run_scraper_proxy_rotate.py')
 
-  // Build arguments
-  const args = [scraperScript]
+  // 結果ファイル（終了コードが取れなかったときのバックアップ）
+  const resultFile = path.join(scraperDir, '.last_result.json')
+
+  // Build arguments for the wrapper (wraps cli_scraper.py)
+  const args = [wrapperScript]
   if (date) {
     args.push('--date', date)
   }
@@ -47,11 +46,10 @@ export async function POST(request: NextRequest) {
     args.push('--tsv-only')
   }
 
-  // Environment variables for the Python process
   const env = {
     ...process.env,
     PYTHONUNBUFFERED: '1',
-    // Ensure .env.local values are passed through
+    RESULT_FILE: resultFile,
     YAHOO_PROXY: process.env.YAHOO_PROXY || '',
     DATABASE_URL: process.env.DATABASE_URL || '',
   }
@@ -68,7 +66,6 @@ export async function POST(request: NextRequest) {
 
     proc.stdout.on('data', (data: Buffer) => {
       stdout += data.toString()
-      // Keep stdout under 100KB for response
       if (stdout.length > 100000) {
         stdout = stdout.slice(-80000)
       }
@@ -81,22 +78,34 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    proc.on('close', (code: number) => {
-      // Extract key stats from output
+    proc.on('close', async (code: number) => {
+      // 結果ファイルがあれば読み込む
+      let resultData: any = {}
+      try {
+        const fs = await import('fs/promises')
+        const resultContent = await fs.readFile(resultFile, 'utf-8')
+        resultData = JSON.parse(resultContent)
+        // クリーンアップ
+        await fs.unlink(resultFile).catch(() => {})
+      } catch {}
+
+      // Extract from stdout as fallback
       const tweetMatch = stdout.match(/(\d+)件のツイートを取得/)
       const dbMatch = stdout.match(/DB総件数: ([\d,]+)件/)
       const errorMatch = stdout.match(/✗\s*(.+)/g)
-      
+      const proxyMatch = stdout.match(/使用プロキシ: (.+?) \(/)
+      const proxyMatch2 = stdout.match(/➡ 使用プロキシ: (.+)/)
+
       resolve(NextResponse.json({
         success: code === 0,
         exitCode: code,
-        tweetsFound: tweetMatch ? parseInt(tweetMatch[1]) : 0,
-        dbTotal: dbMatch ? dbMatch[1] : null,
+        tweetsFound: resultData.tweets_found || (tweetMatch ? parseInt(tweetMatch[1]) : 0),
+        dbTotal: resultData.db_total || (dbMatch ? dbMatch[1] : null),
+        proxyUsed: proxyMatch?.[1] || proxyMatch2?.[1] || resultData.proxy || 'unknown',
         errors: errorMatch || [],
         dryRun,
         date: date || 'yesterday',
-        // Return last 2000 chars of output for debugging
-        outputTail: stdout.slice(-2000),
+        outputTail: stdout.slice(-3000),
       }))
     })
 
@@ -109,18 +118,18 @@ export async function POST(request: NextRequest) {
   })
 }
 
-// GET for health check and manual trigger via browser
 export async function GET(request: NextRequest) {
   if (!checkAuth(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  
+
   return NextResponse.json({
     status: 'ok',
     usage: 'POST /api/admin/scraper?date=YYYY-MM-DD&secret=...',
     params: {
       date: 'Optional. YYYY-MM-DD format. Default: yesterday',
       'dry-run': 'Optional. TSV only, no DB write',
-    }
+    },
+    proxy_rotation: 'auto-detects working Japanese HTTP proxies at each run',
   })
 }
