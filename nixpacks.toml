@@ -1,8 +1,0 @@
-[phases.setup]
-aptPackages = ["python3", "python3-pip"]
-
-[phases.build]
-cmds = [
-    "pip3 install httpx orjson python-dotenv regex psycopg2-binary",
-    "NIXPACKS_NODE_VERSION=22 NODE_ENV=development pnpm build || true && node scripts/postbuild.js",
-]

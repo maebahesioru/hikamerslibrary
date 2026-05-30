@@ -41,7 +41,11 @@ next-env.d.ts
 # Cloudflare
 cloudflare-env.d.ts
 
-# TSV data files - managed by scraper API
+# TSV data files
+public/20*/
+
+# Scraper
+Yahoo-Realtime-Search-Scraper/
 
 # Kiro
 .kiro/

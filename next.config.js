@@ -36,8 +36,6 @@ const nextConfig = {
   experimental: {
     // 最適化
     optimizePackageImports: ['lucide-react'],
-    // サーバー起動時の自動スクレイパースケジュール用
-    instrumentationHook: true,
   },
   images: {
     // 画像最適化設定
