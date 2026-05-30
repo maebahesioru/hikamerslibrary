@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     DATABASE_URL: process.env.DATABASE_URL || '',
   }
 
-  return new Promise((resolve) => {
+  return new Promise<Response>((resolve) => {
     const proc = spawn('python3', args, {
       cwd: scraperDir,
       env,
